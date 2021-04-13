@@ -1,3 +1,4 @@
+import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
@@ -45,6 +46,7 @@ fun main(args: Array<String>) {
         )
 
         System.getenv(ENV_KEY_DISCORD_WEBHOOK).httpPost()
+            .header(Headers.CONTENT_TYPE, "multipart/form-data")
             .body(Gson().toJson(webHookData))
             .response()
     }.firstOrNull()
