@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
             .header("x-apikey", System.getenv(ENV_KEY_REST_DB_KEY))
             .string(),
         object : TypeToken<List<ViewData>>() {}.type
-    ).first().jobId
+    ).firstOrNull()?.jobId
     val unCheckedCompanyList = response.data
         .takeWhile { it.id != latestViewedJobId }
 
@@ -58,7 +58,7 @@ fun main(args: Array<String>) {
 
 fun Request.string() = responseString().third.component1()
 
-data class ViewData(val jobId: Int)
+data class ViewData(val jobId: Int?)
 
 data class Response(val data: List<Data>)
 
