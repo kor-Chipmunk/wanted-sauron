@@ -6,7 +6,7 @@ import com.github.kittinunf.fuel.httpPost
 import com.google.gson.reflect.TypeToken
 
 fun main(args: Array<String>) {
-    val jobSearchApiUrl = WANTED_JOB_SEARCH_API_TEMPLATE.format(ANDROID_CATEGORY)
+    val jobSearchApiUrl = WANTED_JOB_SEARCH_API_TEMPLATE.format(BACKEND_CATEGORY)
 
     val rawResponse = URL(jobSearchApiUrl).readText()
     val response = Gson().fromJson(rawResponse, Response::class.java)
@@ -21,11 +21,31 @@ fun main(args: Array<String>) {
         .takeWhile { it.id != latestViewedJobId }
 
     unCheckedCompanyList.onEach { data ->
-        val message = ":bell: 띵동! 새로운 안드로이드 개발자 포지션이 생겼습니다.\n회사 : %s\n포지션 : %s\nhttps://www.wanted.co.kr/wd/%d"
+        val message = ":bell: 띵동! 새로운 백엔드 개발자 포지션이 생겼습니다.\n회사 : %s\n포지션 : %s\nhttps://www.wanted.co.kr/wd/%d"
             .format(data.company.name, data.position, data.id)
 
-        System.getenv(ENV_KEY_SLACK_WEBHOOK).httpPost()
-            .body(Gson().toJson(mapOf("text" to message)))
+        val webHookData = WebHookData(
+            username = "원티드 채용봇",
+            avatar_url = "https://static.wanted.co.kr/favicon/favicon.ico",
+            allowed_mentions = AllowedMentions(
+                parse = listOf("users", "roles")
+            ),
+            embeds = listOf(Embed(
+                color = "38912",
+                author = Author(
+                    name = data.company.name,
+                    url = "https://www.wanted.co.kr/company/%d".format(data.company.id),
+                    icon_url = data.logo_img.thumb
+                ),
+                title = data.position,
+                url = "https://www.wanted.co.kr/wd/%d".format(data.id),
+                thumbnail = Image(url = data.title_img.thumb),
+                description = message
+            ))
+        )
+
+        System.getenv(ENV_KEY_DISCORD_WEBHOOK).httpPost()
+            .body(Gson().toJson(webHookData))
             .response()
     }.firstOrNull()
         ?.let {
@@ -45,14 +65,53 @@ data class Response(val data: List<Data>)
 data class Data(
     val id: Int,
     val position: String,
-    val company: Company
+    val company: Company,
+    val address: Address,
+    val title_img: OriginThumbImage,
+    val logo_img: OriginThumbImage
 )
 
-data class Company(val name: String)
+data class Company(
+    val id: Int,
+    val name: String
+)
 
-const val ANDROID_CATEGORY = 677
+data class Address(val location: String)
+
+data class OriginThumbImage(
+    val origin: String,
+    val thumb: String
+)
+
+data class WebHookData(
+    val username: String,
+    val avatar_url: String,
+    val allowed_mentions: AllowedMentions,
+    val embeds: List<Embed>
+)
+
+data class AllowedMentions(val parse: List<String>)
+
+data class Embed(
+    val color: String,
+    val author: Author,
+    val title: String,
+    val url: String,
+    val thumbnail: Image,
+    val description: String
+)
+
+data class Author(
+    val name: String,
+    val url: String,
+    val icon_url: String
+)
+
+data class Image(val url: String)
+
+const val BACKEND_CATEGORY = 677
 const val WANTED_JOB_SEARCH_API_TEMPLATE = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=%d&job_sort=job.latest_order&locations=all&years=-1"
-const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-870f.restdb.io/rest/view?sort=_id&dir=-1"
+const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/view?sort=_id&dir=-1"
 
-const val ENV_KEY_SLACK_WEBHOOK = "SLACK_WEBHOOK"
+const val ENV_KEY_DISCORD_WEBHOOK = "DISCORD_WEBHOOK"
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
