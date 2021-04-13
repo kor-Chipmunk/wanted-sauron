@@ -46,7 +46,7 @@ fun main(args: Array<String>) {
         )
 
         System.getenv(ENV_KEY_DISCORD_WEBHOOK).httpPost()
-            .header(Headers.CONTENT_TYPE, "multipart/form-data")
+            .header(Headers.CONTENT_TYPE, "application/json")
             .body(Gson().toJson(webHookData))
             .response()
     }.firstOrNull()
