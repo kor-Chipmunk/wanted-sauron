@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
         object : TypeToken<List<ViewData>>() {}.type
     ).firstOrNull()?.jobId
     val unCheckedCompanyList = response.data
-        .takeWhile { it.id != latestViewedJobId }
+        .takeWhile { it.id > latestViewedJobId ?: 0 }
 
     unCheckedCompanyList.onEach { data ->
         val message = ":bell: 띵동! 새로운 백엔드 개발자 포지션이 생겼습니다.\n회사 : %s\n포지션 : %s\nhttps://www.wanted.co.kr/wd/%d"
