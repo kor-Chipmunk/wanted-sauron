@@ -7,7 +7,7 @@ import com.github.kittinunf.fuel.httpPost
 import com.google.gson.reflect.TypeToken
 
 fun main(args: Array<String>) {
-    val jobSearchApiUrl = WANTED_JOB_SEARCH_API_TEMPLATE.format(BACKEND_CATEGORY)
+    val jobSearchApiUrl = WANTED_JOB_SEARCH_API_URL
 
     val rawResponse = URL(jobSearchApiUrl).readText()
     val response = Gson().fromJson(rawResponse, Response::class.java)
@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
 
         val webHookData = WebHookData(
             username = "원티드 채용봇",
-            avatar_url = "https://static.wanted.co.kr/favicon/favicon.ico",
+            avatar_url = "https://static.wanted.co.kr/images/wdes/0_4.9f31b341.jpg",
             allowed_mentions = AllowedMentions(
                 parse = listOf("users", "roles")
             ),
@@ -111,9 +111,11 @@ data class Author(
 
 data class Image(val url: String)
 
-const val BACKEND_CATEGORY = 872
-const val WANTED_JOB_SEARCH_API_TEMPLATE = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=%d&job_sort=job.latest_order&locations=all&years=-1"
-const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/backend-jobs"
+const val CATEGORY = 872
+const val COLLECTION = "backend-jobs"
+
+const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=$CATEGORY&job_sort=job.latest_order&locations=all&years=-1"
+const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION?sort=_id&dir=-1"
 
 const val ENV_KEY_DISCORD_WEBHOOK = "DISCORD_WEBHOOK"
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
