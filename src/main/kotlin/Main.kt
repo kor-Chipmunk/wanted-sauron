@@ -119,5 +119,5 @@ const val COLLECTION = "node-jobs"
 const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=$CATEGORY&job_sort=job.latest_order&locations=all&years=-1"
 const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION?sort=_id&dir=-1"
 
-const val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_WEBHOOK", "DISCORD_NODE_WEBHOOK")
+val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_WEBHOOK", "DISCORD_NODE_WEBHOOK")
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
