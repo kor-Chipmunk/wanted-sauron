@@ -1,0 +1,24 @@
+name: Crawler-Backend
+
+on:
+  schedule:
+    - cron : '*/10 * * * *'
+  push:
+    branches: [ design ]
+  pull_request:
+    branches: [ design ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          REST_DB_KEY: ${{ secrets.REST_DB_KEY }}
+        run: ./gradlew run
