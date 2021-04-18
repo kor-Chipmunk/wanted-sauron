@@ -4,9 +4,9 @@ on:
   schedule:
     - cron : '*/10 * * * *'
   push:
-    branches: [ backend-node ]
+    branches: [ backend-spring ]
   pull_request:
-    branches: [ backend-node ]
+    branches: [ backend-spring ]
 
   workflow_dispatch:
 
