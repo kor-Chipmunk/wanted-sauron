@@ -22,8 +22,8 @@ fun main(args: Array<String>) {
         .takeWhile { it.id != latestViewedJobId }
 
     unCheckedCompanyList.onEach { data ->
-        val message = ":bell: 띵동! 새로운 백엔드 개발자 포지션이 생겼습니다.\n회사 : %s\n포지션 : %s\nhttps://www.wanted.co.kr/wd/%d"
-            .format(data.company.name, data.position, data.id)
+        val message = ":bell: 띵동! 새로운 %s 포지션이 생겼습니다.\n회사 : %s\n포지션 : %s\nhttps://www.wanted.co.kr/wd/%d"
+            .format(POSITION_NAME, data.company.name, data.position, data.id)
 
         val webHookData = WebHookData(
             username = "원티드 채용봇",
@@ -115,6 +115,7 @@ data class Image(val url: String)
 
 const val CATEGORY = 677
 const val COLLECTION = "android-jobs"
+const val POSITION_NAME = "안드로이드 개발자"
 
 const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=$CATEGORY&job_sort=job.latest_order&locations=all&years=-1"
 const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION?sort=_id&dir=-1"
