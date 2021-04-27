@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
     val jobSearchApiUrl = WANTED_JOB_SEARCH_API_URL
 
     val rawResponse = URL(jobSearchApiUrl).readText()
-    val response = Gson().fromJson(rawResponse, Response::class.java)
+    val response = Gson().fromJson(rawResponse, ResponseParent::class.java)
 
     val latestViewedJobId = Gson().fromJson<List<ViewData>>(
         LAST_VIEWED_ID_API_URL.httpGet()
@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
             .string(),
         object : TypeToken<List<ViewData>>() {}.type
     ).firstOrNull()?.jobId
-    val unCheckedCompanyList = response.data
+    val unCheckedCompanyList = response.jobs.data
         .takeWhile { it.id != latestViewedJobId }
 
     unCheckedCompanyList.onEach { data ->
@@ -64,6 +64,7 @@ fun Request.string() = responseString().third.component1()
 
 data class ViewData(val jobId: Int?)
 
+data class ResponseParent(val jobs: Response)
 data class Response(val data: List<Data>)
 
 data class Data(
@@ -117,7 +118,7 @@ data class Image(val url: String)
 const val COLLECTION = "industry-jobs"
 const val POSITION_NAME = "산업 기능 요원"
 
-const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/search/summary?1619477514917&locations=seoul.all&job_sort=job.latest_order&years=-1&country=kr&query=%EC%82%B0%EC%97%85%EA%B8%B0%EB%8A%A5&company_limit=12"
+const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/search/summary?1619477514917&locations=seoul.all&job_sort=job.latest_order&years=-1&country=kr&query=산업기능&company_limit=12"
 const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION?sort=_id&dir=-1"
 
 val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_INDUSTRY_WEBHOOK")
