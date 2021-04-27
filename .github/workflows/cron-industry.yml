@@ -1,0 +1,26 @@
+name: Crawler-Android
+
+on:
+  schedule:
+    - cron : '*/10 * * * *'
+  push:
+    branches: [ industry ]
+  pull_request:
+    branches: [ industry ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: industry
+
+      - name: Run
+        env:
+          DISCORD_INDUSTRY_WEBHOOK: ${{ secrets.DISCORD_INDUSTRY_WEBHOOK }}
+          REST_DB_KEY: ${{ secrets.REST_DB_KEY }}
+        run: ./gradlew run

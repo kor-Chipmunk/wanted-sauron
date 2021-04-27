@@ -113,12 +113,12 @@ data class Author(
 
 data class Image(val url: String)
 
-const val CATEGORY = 872
-const val COLLECTION = "spring-jobs"
-const val POSITION_NAME = "백엔드 개발자"
+//const val CATEGORY = 872
+const val COLLECTION = "industry-jobs"
+const val POSITION_NAME = "산업 기능 요원"
 
-const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=$CATEGORY&job_sort=job.latest_order&locations=all&years=-1"
+const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/search/summary?1619477514917&locations=seoul.all&job_sort=job.latest_order&years=-1&country=kr&query=%EC%82%B0%EC%97%85%EA%B8%B0%EB%8A%A5&company_limit=12"
 const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION?sort=_id&dir=-1"
 
-val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_WEBHOOK", "DISCORD_SPRING_WEBHOOK")
+val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_INDUSTRY_WEBHOOK")
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
