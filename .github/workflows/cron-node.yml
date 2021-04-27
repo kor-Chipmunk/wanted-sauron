@@ -21,7 +21,6 @@ jobs:
 
       - name: Run
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_NODE_WEBHOOK: ${{ secrets.DISCORD_NODE_WEBHOOK }}
           REST_DB_KEY: ${{ secrets.REST_DB_KEY }}
         run: ./gradlew run
