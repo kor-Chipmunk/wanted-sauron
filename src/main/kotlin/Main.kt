@@ -53,6 +53,10 @@ fun main(args: Array<String>) {
         }
     }.firstOrNull()
         ?.let {
+            DELETION_ALL_LIST_QUERY_URL.httpPost()
+                .header("x-apikey", System.getenv(ENV_KEY_REST_DB_KEY))
+                .response()
+
             LAST_VIEWED_ID_API_URL.httpPost(listOf("jobId" to it.id))
                 .header("x-apikey", System.getenv(ENV_KEY_REST_DB_KEY))
                 .response()
@@ -122,3 +126,5 @@ const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$CO
 
 val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_NODE_WEBHOOK")
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
+
+const val DELETION_ALL_LIST_QUERY_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION/*?q={\"_created\": {\"\$lt\":{\"\$date\":\"\$now\"}}}"
