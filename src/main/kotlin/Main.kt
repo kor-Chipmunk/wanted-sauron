@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import java.net.URL
 import com.github.kittinunf.fuel.httpPost
 import com.google.gson.reflect.TypeToken
+import com.github.kittinunf.fuel.httpDelete
 
 fun main(args: Array<String>) {
     val jobSearchApiUrl = WANTED_JOB_SEARCH_API_URL
@@ -53,6 +54,10 @@ fun main(args: Array<String>) {
         }
     }.firstOrNull()
         ?.let {
+            DELETION_ALL_LIST_QUERY_URL.httpDelete()
+                .header("x-apikey", System.getenv(ENV_KEY_REST_DB_KEY))
+                .response()
+
             LAST_VIEWED_ID_API_URL.httpPost(listOf("jobId" to it.id))
                 .header("x-apikey", System.getenv(ENV_KEY_REST_DB_KEY))
                 .response()
@@ -122,3 +127,5 @@ const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$CO
 
 val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_IOS_WEBHOOK", "DISCORD_IOS_BUSSTOP_WEBHOOK")
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
+
+const val DELETION_ALL_LIST_QUERY_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION/*?q={\"_created\": {\"\$lt\":{\"\$date\":\"\$now\"}}}"
