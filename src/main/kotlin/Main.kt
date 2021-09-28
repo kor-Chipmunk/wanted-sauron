@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import java.net.URL
 import com.github.kittinunf.fuel.httpPost
 import com.google.gson.reflect.TypeToken
+import com.github.kittinunf.fuel.httpDelete
 
 fun main(args: Array<String>) {
     val jobSearchApiUrl = WANTED_JOB_SEARCH_API_URL
@@ -53,7 +54,7 @@ fun main(args: Array<String>) {
         }
     }.firstOrNull()
         ?.let {
-            DELETION_ALL_LIST_QUERY_URL.httpPost()
+            DELETION_ALL_LIST_QUERY_URL.httpDelete()
                 .header("x-apikey", System.getenv(ENV_KEY_REST_DB_KEY))
                 .response()
 
