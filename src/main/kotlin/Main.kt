@@ -125,7 +125,7 @@ const val POSITION_NAME = "iOS 개발자"
 const val WANTED_JOB_SEARCH_API_URL = "https://www.wanted.co.kr/api/v4/jobs?1617705029342&country=kr&tag_type_id=$CATEGORY&job_sort=job.latest_order&locations=all&years=-1"
 const val LAST_VIEWED_ID_API_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION?sort=_id&dir=-1"
 
-val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_IOS_WEBHOOK", "DISCORD_IOS_BUSSTOP_WEBHOOK")
+val ENV_KEY_DISCORD_WEBHOOKS = arrayOf("DISCORD_IOS_WEBHOOK", "DISCORD_IOS_BUSSTOP_WEBHOOK", "DISCORD_IOS_YAGOM_WEBHOOK")
 const val ENV_KEY_REST_DB_KEY = "REST_DB_KEY"
 
 const val DELETION_ALL_LIST_QUERY_URL = "https://wantedsauron-cb29.restdb.io/rest/$COLLECTION/*?q={\"_created\": {\"\$lt\":{\"\$date\":\"\$now\"}}}"
