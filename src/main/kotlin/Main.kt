@@ -47,6 +47,7 @@ fun main(args: Array<String>) {
         )
 
         for (webhook in ENV_KEY_DISCORD_WEBHOOKS) {
+            System.out.println(webhook)
             System.getenv(webhook).httpPost()
                 .header(Headers.CONTENT_TYPE, "application/json")
                 .body(Gson().toJson(webHookData))
