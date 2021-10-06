@@ -23,5 +23,6 @@ jobs:
         env:
           DISCORD_IOS_WEBHOOK: ${{ secrets.DISCORD_IOS_WEBHOOK }}
           DISCORD_IOS_BUSSTOP_WEBHOOK: ${{ secrets.DISCORD_IOS_BUSSTOP_WEBHOOK }}
+          DISCORD_IOS_YAGOM_WEBHOOK: ${{ secrets.DISCORD_IOS_YAGOM_WEBHOOK }}
           REST_DB_KEY: ${{ secrets.REST_DB_KEY }}
         run: ./gradlew run
